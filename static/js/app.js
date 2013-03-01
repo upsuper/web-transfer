@@ -57,7 +57,8 @@ $(function () {
     $.event.props.push('dataTransfer');
     $(document).on('dragenter', function (e) {
         e.preventDefault();
-        $('#drop_file').addClass('in');
+        if ($('#modal').is(':hidden'))
+            $('#drop_file').addClass('in');
     }).on('dragover', function (e) {
         e.preventDefault();
     }).on('dragleave', function (e) {
@@ -66,8 +67,9 @@ $(function () {
             $('#drop_file').removeClass('in');
     }).on('drop', function (e) {
         e.preventDefault();
-        console.log(e.dataTransfer.files);
         $('#drop_file').removeClass('in');
+        if ($('#modal').is(':visible'))
+            return;
         if (e.dataTransfer.files.length == 1)
             uploadFile(e.dataTransfer.files[0]);
     });
