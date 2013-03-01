@@ -33,3 +33,14 @@ h2, .btn {
     padding: 11px 11px!important;
     width: 5em;
 }
+#drop_file { pointer-events: none; }
+#drop_file.in { pointer-events: auto; }
+#drop_file::after {
+    content: "Upload";
+    text-align: center;
+    font-size: 64px;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    color: #fff;
+}

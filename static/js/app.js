@@ -2,14 +2,10 @@ $(function () {
 
     var socket, secret, xhr;
     var $file = $('#file'),
+        $modal = $('#modal'),
         $progress = $('#progress');
 
-    $('#upload').click(function () {
-        $file.click();
-    });
-
-    $file.change(function () {
-        var file = $file[0].files[0];
+    function uploadFile(file) {
         if (!socket) {
             socket = io.connect();
             socket.on('secret', function (s) { secret = s; });
@@ -19,7 +15,7 @@ $(function () {
             $('#fileid_display').text(fileId);
             $('.modal-body').hide();
             $('#waiting').show();
-            $('#modal').modal('show');
+            $modal.modal('show');
             socket.once('start upload', function (id) {
                 if (fileId != id)
                     return;
@@ -56,9 +52,34 @@ $(function () {
                 });
             });
         });
+    }
+
+    $.event.props.push('dataTransfer');
+    $(document).on('dragenter', function (e) {
+        e.preventDefault();
+        $('#drop_file').addClass('in');
+    }).on('dragover', function (e) {
+        e.preventDefault();
+    }).on('dragleave', function (e) {
+        e.preventDefault();
+        if ($(e.target).is('#drop_file'))
+            $('#drop_file').removeClass('in');
+    }).on('drop', function (e) {
+        e.preventDefault();
+        console.log(e.dataTransfer.files);
+        $('#drop_file').removeClass('in');
+        if (e.dataTransfer.files.length == 1)
+            uploadFile(e.dataTransfer.files[0]);
     });
 
-    $('#modal').on('hide', function () {
+    $('#upload').click(function () {
+        $file.click();
+    });
+    $file.change(function () {
+        uploadFile($file[0].files[0]);
+    });
+
+    $modal.on('hide', function () {
         if (xhr) {
             xhr.abort();
             xhr = null;
