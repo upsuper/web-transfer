@@ -99,7 +99,12 @@ $(function () {
             $('#download').click();
     });
     $('#download').click(function () {
-        window.open('/download/' + $('#fileid').val());
+        var fileid = $('#fileid').val();
+        if (!fileid) {
+            alert('Please input File ID');
+            return;
+        }
+        window.open('/download/' + fileid);
         $('#fileid').val('');
     });
 
