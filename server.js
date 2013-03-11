@@ -9,7 +9,7 @@ var app = express(),
     io = require('socket.io').listen(server);
 
 var APP_PORT = 7571,
-    ID_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz',
+    ID_CHARS = '023456789abcdefghijkmnopqrstuvwxyz',
     ID_LENGTH = 5,
     MAX_ID_NUM = Math.pow(ID_CHARS.length, ID_LENGTH);
 
