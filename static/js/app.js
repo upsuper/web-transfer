@@ -81,8 +81,12 @@ $(function () {
         uploadFile($file[0].files[0]);
     });
 
-    $modal.on('hide', function () {
+    $modal.on('hide', function (evt) {
         if (xhr) {
+            if (!confirm('Cancel upload?')) {
+                evt.preventDefault();
+                return;
+            }
             xhr.abort();
             xhr = null;
         }
