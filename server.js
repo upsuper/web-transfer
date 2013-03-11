@@ -15,7 +15,7 @@ var APP_PORT = 7571,
 
 var allFiles = {};
 
-io.set('log level', 2);
+io.set('log level', 1);
 
 app.use(express.static(__dirname + '/static'));
 
@@ -106,3 +106,5 @@ io.sockets.on('connection', function (socket) {
 });
 
 server.listen(APP_PORT, '::');
+
+console.log('pid', process.pid);
